@@ -1,0 +1,66 @@
+@use "../default/color_variable" as *;
+
+/*--------------------------------------------------------------
+30. Blog
+----------------------------------------------------------------*/
+
+.cs_blog.cs_style_1 {
+  img {
+    border-radius: 20px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+  .cs_blog_info {
+    margin-top: 30px;
+  }
+  .cs_blog_subtitle {
+    color: var(--body-color);
+  }
+  &:hover .cs_blog_title {
+    transition: all 0.5s;
+    color: $accent;
+  }
+}
+
+.cs_portfolio_details {
+  img {
+    border-radius: 20px;
+  }
+}
+
+.cs_blog_banner_img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.cs_img_box.cs_style_1 {
+  img {
+    border-radius: 20px;
+  }
+}
+
+.cs_andrew_jackson {
+  padding: 90px 100px;
+  .cs_andrew_jackson_text_body {
+    font-style: italic;
+    line-height: 39px;
+  }
+  .cs_footer_text.cs_color_1 {
+    color: $border;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs_andrew_jackson {
+    padding: 60px 10px;
+    font-size: 18px;
+  }
+  .cs_share_post {
+    gap: 30px;
+    justify-content: center;
+  }
+}

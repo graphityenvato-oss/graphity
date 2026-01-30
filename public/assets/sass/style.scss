@@ -1,0 +1,79 @@
+/* 
+|......................................................................
+| Template Name: Vixan
+| Author: Thememarch
+| Version: 1.0.0
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| TABLE OF CONTENTS:
+|--------------------------------------------------------------------------
+| 1. Basic Color Variable
+| 2. Typography
+| 3. Preloader
+| 4. Spacing
+| 5. General
+| 6. Slider
+| 7. Video Popup
+| 8. Accordian
+| 9. Footer
+| 10. Hobble Effect
+| 11. Sidebar
+| 12. Hero
+| 13. Iconbox
+| 14. Card
+| 15. Posts
+| 16. Team
+| 17. Imagebox
+| 18. CTA
+| 19. Timeline
+| 20. Testimonial
+| 21. Portfolio
+| 22. FunFact
+| 23. Pricing
+| 24. About
+| 25. Story
+| 26. News Letter
+| 27. About Feature
+| 28. Services
+| 29. Work Process
+| 30. Blog
+| 31. Accordeon
+| 32. Contact
+ ................................................................*/
+
+/*--------------------------------------------------------------
+1. Basic Color Variable
+----------------------------------------------------------------*/
+
+@use "default/color_variable" as *;
+@use "default/typography" as *;
+@use "common/preloader" as *;
+@use "common/spacing" as *;
+@use "common/general" as *;
+@use "common/slider" as *;
+@use "common/video-modal" as *;
+@use "common/header" as *;
+@use "common/footer" as *;
+@use "common/isotope" as *;
+@use "common/sidebar" as *;
+@use "shortcode/hero" as *;
+@use "shortcode/iconbox" as *;
+@use "shortcode/card" as *;
+@use "shortcode/post" as *;
+@use "shortcode/team" as *;
+@use "shortcode/imagebox" as *;
+@use "shortcode/cta" as *;
+@use "shortcode/timeline" as *;
+@use "shortcode/testimonial" as *;
+@use "shortcode/portfolio" as *;
+@use "shortcode/funfact" as *;
+@use "shortcode/pricing" as *;
+@use "shortcode/about" as *;
+@use "shortcode/story" as *;
+@use "shortcode/newsletter" as *;
+@use "shortcode/about_feature" as *;
+@use "shortcode/services" as *;
+@use "shortcode/workprocess" as *;
+@use "shortcode/blog" as *;
+@use "shortcode/accordion" as *;
+@use "shortcode/contact" as *;
