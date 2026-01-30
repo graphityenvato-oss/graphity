@@ -1,6 +1,6 @@
 "use client";
 
-import { gsap } from "gsap";
+import { gsap } from "@/plugins";
 import { useEffect, useLayoutEffect } from "react";
 import MouseMove from "@/components/common/MouseMove";
 import ScrollToTop from "@/components/common/ScrollToTop";
@@ -18,7 +18,10 @@ import {
   ScrollTrigger,
   SplitText,
 } from "@/plugins";
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText);
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin, SplitText);
+}
 
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
@@ -38,13 +41,29 @@ const Wrapper = ({ children }: any) => {
 
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
-      ScrollSmoother.create({
+      const existingSmoother =
+        typeof ScrollSmoother.get === "function" ? ScrollSmoother.get() : null;
+      if (existingSmoother) {
+        existingSmoother.kill();
+      }
+      const smoother = ScrollSmoother.create({
         smooth: 1.35,
         effects: true,
         smoothTouch: false,
         normalizeScroll: false,
         ignoreMobileResize: true,
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
       });
+      if (typeof ScrollTrigger.defaults === "function") {
+        const scroller =
+          smoother && typeof smoother.wrapper === "function"
+            ? smoother.wrapper()
+            : window;
+        ScrollTrigger.defaults({ scroller });
+      }
+      ScrollTrigger.clearScrollMemory();
+      ScrollTrigger.refresh(true);
     }
   }, [pathname]);
 

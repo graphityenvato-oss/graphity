@@ -1,12 +1,41 @@
-import { gsap } from "gsap";
-import { SplitText, ScrollTrigger } from "@/plugins";
+import { gsap, SplitText, ScrollTrigger, ScrollSmoother } from "@/plugins";
 
 const animationTitle = () => {
+  const scroller =
+    typeof window !== "undefined" && ScrollSmoother?.get?.()
+      ? ScrollSmoother.get().wrapper()
+      : typeof window !== "undefined"
+        ? window
+        : undefined;
+
+  if (!ScrollTrigger || !SplitText) {
+    const selectors = [
+      ".anim_heading_title",
+      ".anim_text_writting",
+      ".anim_word_writting",
+      ".anim_text",
+      ".anim_div_ShowZoom",
+      ".anim_div_ShowLeftSide",
+      ".anim_div_ShowRightSide",
+      ".anim_div_ShowDowns",
+      ".anim_div_ShowUps",
+      ".anim_text_popup",
+      ".anim_blog",
+    ];
+    selectors.forEach((selector) => {
+      gsap.utils.toArray(selector).forEach((el) => {
+        gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: "transform" });
+      });
+    });
+    return;
+  }
+
   if (typeof window !== "undefined") {
     const splitTitleLines = gsap.utils.toArray(".anim_heading_title");
     splitTitleLines.forEach((splitTextLine) => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          scroller,
           trigger: splitTextLine,
           start: "top 90%",
           end: "bottom 60%",
@@ -38,6 +67,7 @@ const animationTitle = () => {
     textTextWrittings.forEach((splitTextLine) => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          scroller,
           trigger: splitTextLine,
           start: "top 90%",
           end: "bottom 60%",
@@ -68,6 +98,7 @@ const animationTitle = () => {
     textWordWrittings.forEach((splitWordLine) => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          scroller,
           trigger: splitWordLine,
           start: "top 90%",
           end: "bottom 60%",
@@ -100,6 +131,7 @@ const animationTitle = () => {
     splitTextLines.forEach((splitTextLine) => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          scroller,
           trigger: splitTextLine,
           start: "top 90%",
           duration: 2,
@@ -143,6 +175,7 @@ const animationTitle = () => {
       blogAnim.forEach((item, i) => {
         gsap.to(item, {
           scrollTrigger: {
+            scroller,
             trigger: item,
             start: "top center+=200",
             markers: false,
@@ -168,6 +201,7 @@ const animationTitle = () => {
 
       gsap.to(cs_startup, {
         scrollTrigger: {
+          scroller,
           trigger: cs_startup,
           start: "top center+=200",
           markers: false,
@@ -190,6 +224,7 @@ const animationTitle = () => {
     });
     const textUpanddown = gsap.timeline({
       scrollTrigger: {
+        scroller,
         trigger: aminTextUpanddowns,
         start: "top 90%",
         end: "bottom 60%",
@@ -223,6 +258,7 @@ const animationTitle = () => {
 
       gsap.to(showsZoom, {
         scrollTrigger: {
+          scroller,
           trigger: showsZoom,
           start: "top 90%",
           end: "bottom 60%",
@@ -248,6 +284,7 @@ const animationTitle = () => {
 
       gsap.to(showsLeft, {
         scrollTrigger: {
+          scroller,
           trigger: showsLeft,
           start: "top 90%",
           end: "bottom 60%",
@@ -272,6 +309,7 @@ const animationTitle = () => {
 
       gsap.to(showsRight, {
         scrollTrigger: {
+          scroller,
           trigger: showsRight,
           start: "top 90%",
           end: "bottom 60%",
@@ -296,6 +334,7 @@ const animationTitle = () => {
 
       gsap.to(showsDown, {
         scrollTrigger: {
+          scroller,
           trigger: showsDown,
           start: "top 90%",
           end: "bottom 60%",
@@ -313,7 +352,15 @@ const animationTitle = () => {
   if (typeof window !== "undefined") {
     const revealIfInView = (selector) => {
       gsap.utils.toArray(selector).forEach((el) => {
-        if (ScrollTrigger.isInViewport(el, 0.01)) {
+        if (
+          ScrollTrigger.isInViewport
+            ? ScrollTrigger.isInViewport(el, 0.01)
+            : (() => {
+                const rect = el.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                return rect.top < vh * 0.99 && rect.bottom > 0;
+              })()
+        ) {
           gsap.set(el, {
             opacity: 1,
             x: 0,
@@ -348,6 +395,7 @@ const animationTitle = () => {
 
       gsap.to(showsUp, {
         scrollTrigger: {
+          scroller,
           trigger: showsUp,
           start: "top 90%",
           end: "bottom 60%",
@@ -367,6 +415,7 @@ const animationTitle = () => {
     text_anim_top.forEach((splitTextLine2) => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          scroller,
           trigger: splitTextLine2,
           start: "top 90%",
           end: "bottom 60%",
@@ -404,43 +453,101 @@ const animationTitle = () => {
       ".cs_hero .anim_subtext",
     );
 
-    const split_creatives = new SplitText(mark, {
-      type: "chars,words",
-    });
-    const split_solutions = new SplitText(eting, {
-      type: "chars,words",
-    });
-    const split_cs_hero_style5_subtext = new SplitText(cs_hero_style5_subtext, {
-      type: "chars words",
-    });
+    if (mark && eting && cs_hero_style5_subtext) {
+      const split_creatives = new SplitText(mark, {
+        type: "chars,words",
+      });
+      const split_solutions = new SplitText(eting, {
+        type: "chars,words",
+      });
+      const split_cs_hero_style5_subtext = new SplitText(
+        cs_hero_style5_subtext,
+        {
+          type: "chars words",
+        },
+      );
 
-    HomeDigital.from(split_creatives.chars, {
-      duration: 1.2,
-      x: 100,
-      autoAlpha: 0,
-      stagger: 0.05,
-    });
-    HomeDigital.from(
-      split_solutions.chars,
-      {
-        duration: 1,
+      HomeDigital.from(split_creatives.chars, {
+        duration: 1.2,
         x: 100,
         autoAlpha: 0,
-        stagger: 0.01,
-      },
-      "-=1",
-    );
-
-    HomeDigital.from(
-      split_cs_hero_style5_subtext.words,
-      {
-        duration: 1,
-        x: 50,
-        autoAlpha: 0,
         stagger: 0.05,
-      },
-      "-=1",
-    );
+      });
+      HomeDigital.from(
+        split_solutions.chars,
+        {
+          duration: 1,
+          x: 100,
+          autoAlpha: 0,
+          stagger: 0.01,
+        },
+        "-=1",
+      );
+
+      HomeDigital.from(
+        split_cs_hero_style5_subtext.words,
+        {
+          duration: 1,
+          x: 50,
+          autoAlpha: 0,
+          stagger: 0.05,
+        },
+        "-=1",
+      );
+    }
+  }
+
+  if (typeof window !== "undefined") {
+    const selectors = [
+      ".anim_heading_title",
+      ".anim_text_writting",
+      ".anim_word_writting",
+      ".anim_text",
+      ".anim_div_ShowZoom",
+      ".anim_div_ShowLeftSide",
+      ".anim_div_ShowRightSide",
+      ".anim_div_ShowDowns",
+      ".anim_div_ShowUps",
+      ".anim_text_popup",
+      ".anim_blog",
+    ];
+    const handlerKey = "__animRevealHandler";
+    const prev = window[handlerKey];
+    if (prev) {
+      window.removeEventListener("scroll", prev);
+      window.removeEventListener("resize", prev);
+    }
+    const revealOnScroll = () => {
+      selectors.forEach((selector) => {
+        gsap.utils.toArray(selector).forEach((el) => {
+          if (el.dataset?.animRevealed) return;
+          const inView = ScrollTrigger.isInViewport
+            ? ScrollTrigger.isInViewport(el, 0.01)
+            : (() => {
+                const rect = el.getBoundingClientRect();
+                const vh =
+                  window.innerHeight || document.documentElement.clientHeight;
+                return rect.top < vh * 0.99 && rect.bottom > 0;
+              })();
+          if (inView) {
+            el.dataset.animRevealed = "true";
+            gsap.to(el, {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              scale: 1,
+              duration: 0.6,
+              ease: "power2.out",
+              clearProps: "transform",
+            });
+          }
+        });
+      });
+    };
+    window[handlerKey] = revealOnScroll;
+    revealOnScroll();
+    window.addEventListener("scroll", revealOnScroll, { passive: true });
+    window.addEventListener("resize", revealOnScroll);
   }
 };
 

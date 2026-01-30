@@ -1,4 +1,4 @@
-import { gsap } from "gsap";
+import { gsap } from "@/plugins";
 
 const buttonAnimation = async () => {
   const jQuery = (await import("jquery")).default;
